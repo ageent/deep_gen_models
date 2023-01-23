@@ -2,7 +2,7 @@ numpy
 matplotlib
 pillow
 tqdm
-pytorch
+torch
 torchvision
 torchaudio
 gdown
