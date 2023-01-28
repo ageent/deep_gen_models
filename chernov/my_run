@@ -1,0 +1,11 @@
+conda create -y -n dgm python=3.8
+cd ~/chernov/my/dgm/deep_gen_models/chernov
+pip install -r requirements.txt
+pip install ipywidgets==7 -U
+source activate
+conda activate dgm
+pip install ipykernel
+python -m ipykernel install --user --name dgm
+
+---CPU
+conda install -y pytorch torchvision torchaudio cpuonly -c pytorch
