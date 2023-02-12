@@ -11,7 +11,7 @@ LABEL_FONT_SIZE = 14
 TITLE_FONT_SIZE = 16
 
 
-def plot_training_curves(train_losses, test_losses, logscale_y=False, logscale_x=False):
+def plot_training_curves(train_losses, test_losses, logscale_y=False, logscale_x=False, save_to=None):
     n_train = len(train_losses[list(train_losses.keys())[0]])
     n_test = len(test_losses[list(train_losses.keys())[0]])
     x_train = np.linspace(0, n_test - 1, n_train)
@@ -36,10 +36,14 @@ def plot_training_curves(train_losses, test_losses, logscale_y=False, logscale_x
     plt.xticks(fontsize=TICKS_FONT_SIZE)
     plt.yticks(fontsize=TICKS_FONT_SIZE)
     plt.grid()
+    
+    if save_to:
+        plt.savefig(save_to)
+        
     plt.show()
 
 
-def show_samples(samples, title, figsize=None, nrow=None):
+def show_samples(samples, title, figsize=None, nrow=None, save_to=None):
     if isinstance(samples, np.ndarray):
         samples = torch.FloatTensor(samples)
     if nrow is None:
@@ -53,16 +57,20 @@ def show_samples(samples, title, figsize=None, nrow=None):
     plt.title(title, fontsize=TITLE_FONT_SIZE)
     plt.imshow(grid_img)
     plt.axis('off')
+    
+    if save_to:
+        plt.savefig(save_to)
+        
     plt.show()
 
 
-def visualize_images(data, title):
+def visualize_images(data, title, save_to=None):
     idxs = np.random.choice(len(data), replace=False, size=(100,))
     images = data[idxs]
-    show_samples(images, title)
+    show_samples(images, title, save_to=save_to)
 
 
-def visualize_2d_data(train_data, test_data, train_labels=None, test_labels=None):
+def visualize_2d_data(train_data, test_data, train_labels=None, test_labels=None, save_to=None):
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
     ax1.set_title('train', fontsize=TITLE_FONT_SIZE)
     ax1.scatter(train_data[:, 0], train_data[:, 1], s=1, c=train_labels)
@@ -70,10 +78,14 @@ def visualize_2d_data(train_data, test_data, train_labels=None, test_labels=None
     ax2.set_title('test', fontsize=TITLE_FONT_SIZE)
     ax2.scatter(test_data[:, 0], test_data[:, 1], s=1, c=test_labels)
     ax2.tick_params(labelsize=LABEL_FONT_SIZE)
+    
+    if save_to:
+        plt.savefig(save_to)
+        
     plt.show()
 
 
-def visualize_2d_samples(data, title, labels=None, xlabel=None, ylabel=None):
+def visualize_2d_samples(data, title, labels=None, xlabel=None, ylabel=None, save_to=None):
     plt.figure(figsize=(5, 5))
     plt.scatter(data[:, 0], data[:, 1], s=1, c=labels)
     plt.title(title, fontsize=TITLE_FONT_SIZE)
@@ -83,10 +95,14 @@ def visualize_2d_samples(data, title, labels=None, xlabel=None, ylabel=None):
         plt.xlabel(xlabel, fontsize=LABEL_FONT_SIZE)
     if ylabel is not None:
         plt.ylabel(ylabel, fontsize=LABEL_FONT_SIZE)
+    
+    if save_to:
+        plt.savefig(save_to)
+        
     plt.show()
 
 
-def visualize_2d_densities(x_grid, y_grid, densities, title, xlabel=None, ylabel=None):
+def visualize_2d_densities(x_grid, y_grid, densities, title, xlabel=None, ylabel=None, save_to=None):
     densities = densities.reshape([y_grid.shape[0], y_grid.shape[1]])
     plt.figure(figsize=(5, 5))
     plt.pcolor(x_grid, y_grid, densities)
@@ -99,4 +115,8 @@ def visualize_2d_densities(x_grid, y_grid, densities, title, xlabel=None, ylabel
         plt.xlabel(xlabel, fontsize=LABEL_FONT_SIZE)
     if ylabel is not None:
         plt.ylabel(ylabel, fontsize=LABEL_FONT_SIZE)
+    
+    if save_to:
+        plt.savefig(save_to)
+        
     plt.show()

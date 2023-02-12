@@ -5,7 +5,7 @@ import torch
 from torch import optim
 
 
-def train_epoch(model, train_loader, optimizer, use_cuda, loss_key='total'):
+def train_epoch(model, train_loader, optimizer, use_cuda, loss_key='total_loss'):
     model.train()
 
     stats = defaultdict(list)
@@ -23,7 +23,7 @@ def train_epoch(model, train_loader, optimizer, use_cuda, loss_key='total'):
     return stats
 
 
-def eval_model(model, data_loader, use_cuda):
+def eval_model(model, data_loader, use_cuda): 
     model.eval()
     stats = defaultdict(float)
     with torch.no_grad():
@@ -33,7 +33,7 @@ def eval_model(model, data_loader, use_cuda):
             losses = model.loss(x)
             for k, v in losses.items():
                 stats[k] += v.item() * x.shape[0]
-
+        
         for k in stats.keys():
             stats[k] /= len(data_loader.dataset)
     return stats
@@ -65,4 +65,5 @@ def train_model(
         for k in train_loss.keys():
             train_losses[k].extend(train_loss[k])
             test_losses[k].append(test_loss[k])
+            print(f'train_loss {torch.tensor(train_loss[k]).mean():.4f}, test_loss {test_loss[k]:.4f}')
     return dict(train_losses), dict(test_losses)
