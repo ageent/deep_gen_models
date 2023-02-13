@@ -1,0 +1,17 @@
+conda create -y -n dgm python=3.8
+cd ~/chernov/my/dgm/deep_gen_models/chernov
+source activate
+conda activate dgm
+pip install -r requirements.txt
+pip install ipykernel ipywidgets==7 -U
+python -m ipykernel install --user --name dgm
+
+---CPU
+conda install -y pytorch torchvision torchaudio cpuonly -c pytorch
+
+---GPU
+conda install -y pytorch torchvision torchaudio pytorch-cuda=11.6 -c pytorch -c nvidia
+# or
+pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116
+# or
+conda install pytorch==1.7.1 torchvision==0.8.2 torchaudio==0.7.2 cudatoolkit=11.0 -c pytorch

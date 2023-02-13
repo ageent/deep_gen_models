@@ -1,0 +1,1 @@
+{"epochs": 1000, "batch_size": 64, "lr": 0.0001, "n_layers": 9, "n_filters": 64, "use_layer_norm": true}
